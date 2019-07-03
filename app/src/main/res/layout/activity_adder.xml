@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".AdderActivity" android:orientation="vertical">
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="150dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:imeOptions="actionSearch"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/city_edit"
+            android:hint="город"/>
+    <Button
+            android:text="Добавить город"
+            android:background="@drawable/btn_circle"
+            android:textColor="@color/colorWhite"
+
+            android:layout_marginTop="30dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/adder_btn"/>
+</LinearLayout>

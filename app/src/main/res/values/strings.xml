@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Weather Application</string>
+    <string name="labl">Weather</string>
+    <string name="delete">Удалить</string>
+    <string name="deny">Отменить</string>
+    <string name="add">Добавить</string>
+</resources>
