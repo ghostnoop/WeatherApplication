@@ -243,7 +243,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun msg(msg: String) {
-        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
     }
 
 
