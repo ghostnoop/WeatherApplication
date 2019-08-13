@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.WindowManager
 import android.widget.Toast
 import com.example.kotlinretro.api.RetrofitClient
 import com.example.weatherapplication.models.DefaultResponse
@@ -19,6 +20,7 @@ class AdderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adder)
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
 
         adder_btn.setOnClickListener {

@@ -5,11 +5,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinretro.api.RetrofitClient
@@ -25,15 +23,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
 
 
 
         refreshlay.setOnRefreshListener {
-            getcitys()
+//            if (isReallyOnline())
+                getcitys()
+//            else {
+//                refreshlay.isRefreshing = false
+//                msg("No internet connection")
+//            }
         }
-
-
 
 
     }
@@ -90,7 +92,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        for (i in 0..citys.size - 1) {
+//        for (i in 0..citys.size - 1) {
+            var i:Int = 0
+            while(i<citys.size){
             val url =
                 "http://api.openweathermap.org/data/2.5/weather?q=" + citys[i].cityname + "&APPID=692af1539a2faebd8369fbe3d00c4fb6"
 
@@ -111,30 +115,34 @@ class MainActivity : AppCompatActivity() {
                         weather.add(homeFeed)
                     }
                     runOnUiThread {
+
                         refreshlay.isRefreshing = false
 
                         if (weather.size > 0)
-                            showeather(weather,1)
+                            showeather(weather, 1)
 
                     }
+
 
                 }
 
                 override fun onFailure(call: Call?, e: IOException?) {
-                    println("Failed to execute request")
-                    msg("error")
+//                    msg("error")
 
                 }
+
             })
-        }
+                i=i+1
+
+            }
 
 
     }
 
 
-    fun showeather(weather: MutableList<Weather>,j:Int) {
+    fun showeather(weather: MutableList<Weather>, j: Int) {
         recyclerViewWeather.layoutManager = LinearLayoutManager(applicationContext)
-        recyclerViewWeather?.adapter = WeatherAdapter(weather,j)
+        recyclerViewWeather?.adapter = WeatherAdapter(weather, j)
         actionCity(1)
     }
 
@@ -151,7 +159,7 @@ class MainActivity : AppCompatActivity() {
         if (did.equals(1)) {
             recyclerViewWeather.addOnItemClickListener(object : OnItemClickListener {
                 override fun onItemClicked(position: Int, view: View) {
-                    msg(weath[position].name)
+//                    msg(weath[position].name)
                     delcity(position)
 
                 }
@@ -173,7 +181,7 @@ class MainActivity : AppCompatActivity() {
                     call: retrofit2.Call<DefaultResponse>,
                     response: retrofit2.Response<DefaultResponse>
                 ) {
-                    msg(response.body().toString())
+//                    msg(response.body().toString())
                 }
             })
     }
@@ -183,7 +191,7 @@ class MainActivity : AppCompatActivity() {
         RetrofitClient.instance.getCitys()
             .enqueue(object : retrofit2.Callback<List<Citynames>> {
                 override fun onFailure(call: retrofit2.Call<List<Citynames>>, t: Throwable) {
-                    msg("eror")
+//                    msg("eror")
                 }
 
                 override fun onResponse(
@@ -194,11 +202,10 @@ class MainActivity : AppCompatActivity() {
                     if (response.body().toString() == "[]") {
                         refreshlay.isRefreshing = false
                         showeather(weath, 0)
-                    }
-                    else {
+                    } else {
                         response.body()?.let {
                             fetchWeather(it)
-                            msg(it.size.toString())
+//                            msg(it.size.toString())
 
                         }
 
@@ -206,17 +213,6 @@ class MainActivity : AppCompatActivity() {
                 }
             })
     }
-
-    override fun onStart() {
-        super.onStart()
-
-        getcitys()
-
-    }
-
-
-
-
 
 
     interface OnItemClickListener {
@@ -242,8 +238,37 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    override fun onStart() {
+        super.onStart()
+//        if (isReallyOnline())
+            getcitys()
+//        else
+//            msg("No internet connection")
+
+    }
+
+
+    fun isReallyOnline(): Boolean {
+
+        val runtime = Runtime.getRuntime()
+        try {
+
+            val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
+            val exitValue = ipProcess.waitFor()
+            return exitValue == 0
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        return false
+    }
+
     fun msg(msg: String) {
-//        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
     }
 
 

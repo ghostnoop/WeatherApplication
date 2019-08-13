@@ -11,8 +11,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="150dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
             android:imeOptions="actionSearch"
             android:inputType="textPersonName"
             android:ems="10"
@@ -22,7 +22,6 @@
             android:text="Добавить город"
             android:background="@drawable/btn_circle"
             android:textColor="@color/colorWhite"
-
             android:layout_marginTop="30dp"
             style="?android:attr/borderlessButtonStyle"
             android:layout_marginRight="40dp"
